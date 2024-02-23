@@ -1,6 +1,7 @@
-import express from 'express'
+import express, { NextFunction,Request,Response } from 'express'
 import { router } from './routes'
 import cors from 'cors'
+import AppError from './helpers/app-error'
 export const app = express()
 
 app.use(cors({
@@ -10,4 +11,9 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-app.use('/api',router)
+app.use('/api/v1',router)
+app.use((error:AppError,req:Request,res:Response,next:NextFunction)=>{
+    return res.status(error.status).json({
+        message:error.message
+    })
+})
