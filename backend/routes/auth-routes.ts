@@ -4,5 +4,5 @@ import authValidator from '../middleware/auth-validator'
 
 export const authRouter = express.Router()
 
-authRouter.post('/login',authValidator.validate,authController.login)
-authRouter.post('/register',authValidator.validate,authController.register)
+authRouter.post('/login',authValidator.validate,authController.login.bind(authController))
+authRouter.post('/register',authValidator.validate,authController.register.bind(authController))
